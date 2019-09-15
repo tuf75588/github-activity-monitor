@@ -3,11 +3,33 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { useIdentityContext } from 'react-netlify-identity';
 import * as GithubContext from './github-client';
-import Login from './login';
+
+
+function Login() {
+  const {
+    settings, loginProvider, signup, login,
+  } = useIdentityContext();
+  return (
+    <div>
+      <button type="button">login with github</button>
+    </div>
+  );
+}
 
 
 function App() {
-  return <GithubContext.Provider><Login /></GithubContext.Provider>;
+  return (
+    <GithubContext.Provider>
+      <Login />
+      <Dashboard />
+    </GithubContext.Provider>
+  );
+}
+
+
+function Dashboard() {
+  const props = useIdentityContext();
+  return <div>Dashboard</div>;
 }
 
 const ui = <App />;
