@@ -1,37 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useIdentityContext, IdentityContextProvider } from 'react-netlify-identity';
-import { Router, navigate } from '@reach/router';
-import isLoading from './useLoading';
-import Dashboard from './screens/dashboard';
-import useLoading from './useLoading';
-import Login from './screens/login';
 import ThemeProvider from './shared/theme-provider';
+import {Router} from '@reach/router';
 import './global-styles.css';
-
-function PrivateRoute(props) {
-  const { as: Comp } = props;
-  const identity = useIdentityContext();
-
-  return <Comp />;
-}
-
+import * as GithubContext from './github-client';
+import Home from './screens/home';
+import User from './screens/user';
 
 function App() {
-  const url = 'https://infallible-clarke-998d83.netlify.com/';
-
   return (
-    <IdentityContextProvider url={url}>
+    <div>
       <ThemeProvider>
-        <Router>
-          <Login path="/" />
-          <PrivateRoute path="/dashboard" as={Dashboard} />
-        </Router>
+        <GithubContext.Provider>
+          <Router>
+            <Home exact path="/" />
+            <User path="/:username" />
+          </Router>
+        </GithubContext.Provider>
       </ThemeProvider>
-    </IdentityContextProvider>
+    </div>
   );
 }
-
 
 const ui = <App />;
 const rootElement = document.getElementById('root');
