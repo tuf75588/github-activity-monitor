@@ -34,7 +34,12 @@ function useSafeSetState(initialState) {
   return [state, safeSetState];
 }
 
-function useQuery({normalize = (data) => data, children, query, variables}) {
+export function useQuery({
+  normalize = (data) => data,
+  children,
+  query,
+  variables,
+}) {
   const [state, safeSetState] = useSafeSetState({
     loaded: false,
     fetching: false,
@@ -46,7 +51,7 @@ function useQuery({normalize = (data) => data, children, query, variables}) {
     if (isEqual(previousInputs, [query, variables])) {
       return;
     }
-    setState({fetching: true});
+    safeSetState({fetching: true});
   });
 
   const previousInputs = usePrevious([query, variables]);
