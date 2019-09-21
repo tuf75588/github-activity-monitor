@@ -4,7 +4,7 @@ import {GraphQLClient} from 'graphql-request';
 import {navigate, createHistory} from '@reach/router';
 import netlify from 'netlify-auth-providers';
 import {jsx} from '@emotion/core';
-import {LoginButton} from './shared/pattern';
+import {PrimaryButton} from './shared/pattern';
 const GithubClientContext = React.createContext();
 const {Consumer, Provider} = GithubClientContext;
 async function authenticateWithGithub() {
@@ -99,14 +99,10 @@ function GithubClientProvider(props) {
           <pre>{JSON.stringify(error, null, 2)}</pre>
         </div>
       ) : (
-        <LoginButton onClick={login}>Login with GitHub</LoginButton>
+        <PrimaryButton onClick={login}>Login with GitHub</PrimaryButton>
       )}
     </div>
   );
 }
 
-export {
-  GithubClientProvider as Provider,
-  Consumer,
-  GithubClientContext as Context,
-};
+export {GithubClientProvider as Provider, Consumer, GithubClientContext as Context};

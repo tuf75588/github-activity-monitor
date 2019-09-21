@@ -34,30 +34,35 @@ function useSafeSetState(initialState) {
   return [state, safeSetState];
 }
 
-export function useQuery({
-  normalize = (data) => data,
-  children,
-  query,
-  variables,
-}) {
+function useDeepCompare(inputs, callback) {
+  const cleanupRef = useRef();
+
+  useEffect(() => {
+    if (!isEqual(inputs, previousInputs)) {
+      cleanupRef.current = callback();
+    }
+    return cleanupRef.current;
+  });
+
+  const previousInputs = usePrevious(inputs);
+}
+
+//! these arguments represent the state that User depends on.
+function useQuery({normalize = (data) => data, children, query, variables}) {
   const [state, safeSetState] = useSafeSetState({
     loaded: false,
     fetching: false,
     data: null,
     error: null,
   });
-
+  const client = useContext(Github.Context);
   useEffect(() => {
-    if (isEqual(previousInputs, [query, variables])) {
-      return;
-    }
     safeSetState({fetching: true});
   });
-
-  const previousInputs = usePrevious([query, variables]);
+  return state;
 }
 
-const Query = ({children, props}) => children(useQuery(props));
+const Query = ({children, ...props}) => children(useQuery(props));
 
 Query.propTypes = {
   normalize: PropTypes.func,
@@ -65,3 +70,6 @@ Query.propTypes = {
   query: PropTypes.string.isRequired,
   variables: PropTypes.object,
 };
+
+export default useQuery;
+export {useQuery};

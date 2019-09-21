@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
-import {Context as GithubContext} from '../../github-client';
 import {useQuery} from './components/query';
+import {Context as GithubContext} from '../../github-client';
 const gql = String.raw;
 
 const userQuery = gql`

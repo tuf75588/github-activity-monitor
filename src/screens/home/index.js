@@ -1,7 +1,11 @@
 import React from 'react';
-
+import {IsolatedContainer, PrimaryButton} from '../../shared/pattern';
 function Home(props) {
-  return <div>Home component</div>;
+  return (
+    <IsolatedContainer>
+      home component<PrimaryButton>Go home</PrimaryButton>
+    </IsolatedContainer>
+  );
 }
 
 export default Home;
