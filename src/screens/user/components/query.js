@@ -34,31 +34,39 @@ function useSafeSetState(initialState) {
   return [state, safeSetState];
 }
 
-function useDeepCompare(inputs, callback) {
+function useDeepCompareEffect(callback, inputs) {
   const cleanupRef = useRef();
-
   useEffect(() => {
-    if (!isEqual(inputs, previousInputs)) {
+    if (!isEqual(previousInputs, inputs)) {
       cleanupRef.current = callback();
     }
     return cleanupRef.current;
   });
-
   const previousInputs = usePrevious(inputs);
 }
 
 //! these arguments represent the state that User depends on.
-function useQuery({normalize = (data) => data, children, query, variables}) {
-  const [state, safeSetState] = useSafeSetState({
+function useQuery({normalize = (data) => data, query, variables}) {
+  const [state, setState] = useSafeSetState({
     loaded: false,
     fetching: false,
     data: null,
     error: null,
   });
   const client = useContext(Github.Context);
-  useEffect(() => {
-    safeSetState({fetching: true});
-  });
+  useDeepCompareEffect(() => {
+    setState({fetching: true});
+    client.request(query, variables).then((res) => {
+      console.log(res);
+      setState({
+        data: normalize(res),
+        loaded: true,
+        fetching: false,
+        error: null,
+      });
+    });
+  }, [query, variables]);
+
   return state;
 }
 

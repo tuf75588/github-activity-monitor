@@ -15,19 +15,28 @@ const userQuery = gql`
 
 function makeDataMoreNormal(data) {
   console.log(data);
+  const {
+    user: {login, name, avatarUrl},
+  } = data;
+  return {
+    login,
+    name,
+    avatarUrl,
+  };
 }
 
 //! user will receive a username prop for our graphql query
 function User({username}) {
   const [filter, setfilter] = useState('');
   const {logout} = useContext(GithubContext);
-  const {loaded, fetching, error} = useQuery({
+  const {fetching, data, error} = useQuery({
     query: userQuery,
     variables: {username},
     normalize: makeDataMoreNormal,
   });
+  console.log(data);
 
-  return <div>USER!</div>;
+  return <div>user page!</div>;
 }
 
 export default User;
