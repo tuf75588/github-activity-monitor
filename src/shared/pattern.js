@@ -72,14 +72,16 @@ const smallerHeading = {
 
 //! gets passed a styles object
 function variantStyles(styles) {
-  return function applyStyles(props) {
-    return Object.entries(props).map(([key, value]) => {
-      if (styles[key]) {
-        console.log(styles[key][value]);
-      }
-      return null;
+  return function dynamicStyles(props) {
+    return Object.entries(props).map((s) => {
+      console.log(s);
     });
   };
+}
+
+//! will accept two arguments, check typeof styles and if function call styles with props
+function applyStyles(styles) {
+  console.log(typeof styles);
 }
 
 variantStyles({tint: {faded: ({theme}) => ({color: 'red'})}});
