@@ -90,6 +90,27 @@ export const PrimaryButton = styled(Button)({
   },
 });
 
+export const Image = styled.img(
+  {border: 0, verticalAlign: 'middle'},
+  propStyles({
+    responsive: {
+      display: 'block',
+      borderRadius: '10px',
+      maxWidth: '100%',
+      height: 'auto',
+    },
+  }),
+);
+
+export const Text = styled.span(
+  variantStyles({
+    tint: {
+      faded: ({theme}) => ({color: theme.fontColor.faded}),
+      fadedExtra: ({theme}) => ({color: theme.fontColor.fadedExtra}),
+    },
+  }),
+);
+
 export function IsolatedContainer({children, ...props}) {
   return (
     <div
