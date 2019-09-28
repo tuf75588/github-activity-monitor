@@ -57,7 +57,6 @@ function useQuery({normalize = (data) => data, query, variables}) {
   useDeepCompareEffect(() => {
     setState({fetching: true});
     client.request(query, variables).then((res) => {
-      console.log(res);
       setState({
         data: normalize(res),
         loaded: true,

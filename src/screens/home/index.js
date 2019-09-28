@@ -11,20 +11,17 @@ import {navigate} from '@reach/router';
 //! styles is an object {responsive: display, height, maxWidth }
 //!
 
+function handleSubmit(e) {
+  e.preventDefault();
+  const username = e.target.elements.username.value.trim();
+  navigate(`/${username}`);
+}
 function Home() {
-  const userRef = React.useRef();
   return (
     <IsolatedContainer>
-      <form
-        css={{display: 'flex', alignItems: 'center'}}
-        onSubmit={(e) => {
-          e.preventDefault();
-          const user = userRef.current.value;
-          navigate(`/${user}`);
-        }}
-      >
-        <Input placeholder="enter a github username" size="lg" type="text" name="username" ref={userRef} />
-        <Button display="inline" size="lg" type="submit">
+      <form css={{display: 'flex', alignItems: 'center'}} onSubmit={handleSubmit}>
+        <Input placeholder="enter a github username" size="lg" type="text" name="username" />
+        <Button size="lg" type="submit" variantColor="blue" border="none" textAlign="center">
           Go
         </Button>
       </form>

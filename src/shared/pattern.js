@@ -34,7 +34,7 @@ function applyStyles(styles, props) {
   return typeof styles === 'function'
     ? styles(props)
     : Array.isArray(styles)
-    ? style.map((s) => applyStyles(s, props))
+    ? styles.map((s) => applyStyles(s, props))
     : styles;
 }
 //#endregion
@@ -46,7 +46,7 @@ const heading = {
   lineHeight: 1.1,
 };
 
-const largeHeading = {
+const largerHeading = {
   marginTop: '20px',
   marginBottom: '10px',
 };
@@ -108,6 +108,14 @@ export const Text = styled.span(
       faded: ({theme}) => ({color: theme.fontColor.faded}),
       fadedExtra: ({theme}) => ({color: theme.fontColor.fadedExtra}),
     },
+    size: {
+      superheading: [heading, largerHeading, {fontSize: 36}],
+      heading: [heading, largerHeading, {fontSize: 30}],
+      subheading: [heading, largerHeading, {fontSize: 20}],
+      superstandard: [heading, smallerHeading, {fontSize: 18}],
+      standard: [heading, smallerHeading, {fontSize: 14}],
+      substandard: [heading, largerHeading, {fontSize: 12}],
+    },
   }),
 );
 
@@ -123,5 +131,16 @@ export function IsolatedContainer({children, ...props}) {
     >
       {children}
     </div>
+  );
+}
+
+export function LoadingMessagePage({children}) {
+  return (
+    <IsolatedContainer>
+      <div css={{textAlign: 'center'}}></div>
+      <p>
+        <Text size="subheading">{children}</Text>
+      </p>
+    </IsolatedContainer>
   );
 }
