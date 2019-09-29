@@ -8,7 +8,7 @@ const sizes = {
 
 function Loading({size = 'medium', className = '', ...props}) {
   return (
-    <div styles={sizes[size]} className={`${className} Ids-ellipsis`} {...props}>
+    <div style={sizes[size]} className={`${className} lds-ellipsis`} {...props}>
       <div />
       <div />
       <div />
@@ -16,4 +16,5 @@ function Loading({size = 'medium', className = '', ...props}) {
     </div>
   );
 }
+
 export default Loading;

@@ -4,6 +4,7 @@ import {jsx} from '@emotion/core';
 import {Link} from '@reach/router';
 import styled from '@emotion/styled';
 import {style} from 'styled-system';
+import Loading from './loading';
 //! util functions
 //#region
 //! gets passed a styles object
@@ -38,6 +39,8 @@ function applyStyles(styles, props) {
     : styles;
 }
 //#endregion
+
+export const Section = styled.div({padding: '20px 0'}, ({theme}) => theme.common.borderBottom);
 
 const heading = {
   display: 'block',
@@ -134,13 +137,28 @@ export function IsolatedContainer({children, ...props}) {
   );
 }
 
+/**
+ * Makes it easier to create an emotion component which
+ * accepts props to enable/disable certain styles.
+ *
+ * accepts an object where the key is a prop and the value
+ * is the styles that should be applied if that prop is
+ * passed. Returns a function which you pass to a
+ * emotionComponentFactory.
+ *
+ * @param {Object} styles The prop to styles object
+ * @return {Function} the dynamic styles function
+ */
+
 export function LoadingMessagePage({children}) {
   return (
     <IsolatedContainer>
-      <div css={{textAlign: 'center'}}></div>
-      <p>
-        <Text size="subheading">{children}</Text>
-      </p>
+      <div css={{textAlign: 'center'}}>
+        <p>
+          <Text size="subheading">{children}</Text>
+        </p>
+        <Loading />
+      </div>
     </IsolatedContainer>
   );
 }

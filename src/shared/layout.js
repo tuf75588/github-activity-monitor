@@ -46,9 +46,12 @@ const Column = styled.div(
     minHeight: '1px',
     paddingRight: '15px',
     paddingLeft: '15px',
+    border: '1px solid black',
   },
   ({width}) => ({
-    flex: 'width',
+    [queries.phone]: {
+      flex: 'width',
+    },
   }),
 );
 
