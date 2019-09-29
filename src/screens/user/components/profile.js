@@ -8,25 +8,30 @@ function Profile({data}) {
   const {organizations} = data;
   console.log(data);
   return (
-    <Section>
-      <Image src={data.avatarUrl} responsive rounded css={{width: 'auto'}} />
-      <Text fontSize="2xl" fontWeight="em" textAlign="center">
+    <div>
+      <Section>
+        <Image src={data.avatarUrl} responsive rounded css={{width: 'auto'}} />
+      </Section>
+      <Text fontSize="2xl" fontWeight="bold" textAlign="center" css={{marginBottom: 10}}>
         Organizations
       </Text>
-      <Box d="flex" mt="5" justifyContent="space-around">
+      <Box d="flex" justifyContent="space-around" flexWrap="wrap">
         {organizations &&
           organizations.map((orgs) => <OrganizationSection src={orgs.avatarUrl} key={orgs.id} name={orgs.name} />)}
       </Box>
-    </Section>
+    </div>
   );
 }
 
 function OrganizationSection({src, key, name}) {
   return (
     <div key={key}>
-      <Image src={src} responsive alt={`profile login for ${name}`} css={{width: 60, height: 60}} />
+      <Image src={src} responsive alt={`profile login for ${name}`} css={{width: 40, height: 40}} />
     </div>
   );
 }
 
+function ProfileState() {
+  return <div>this is where followers and stuff will go.</div>;
+}
 export default Profile;

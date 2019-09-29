@@ -90,12 +90,21 @@ function User({username}) {
     <LoadingMessagePage>Loading data for {username}</LoadingMessagePage>
   ) : data ? (
     <UserContext.Provider value={data}>
-      <Box>
-        <Box maxW="sm" pl="20px">
+      <Box display="flex">
+        <Box maxW="sm" pl="15px">
           <Profile data={data} />
           <PrimaryButton css={{marginTop: 20, width: '100%'}} to="/">
             Logout
           </PrimaryButton>
+        </Box>
+        <Box>
+          <Box pt="20px" pb="20px" w="lg" d="flex" justifyContent="center">
+            <input
+              type="text"
+              placeholder="filter issues"
+              css={{padding: 20, borderRadius: '5px', width: 300, height: 25, border: '0.5px solid black'}}
+            />
+          </Box>
         </Box>
       </Box>
     </UserContext.Provider>
