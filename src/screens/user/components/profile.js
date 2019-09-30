@@ -5,13 +5,29 @@ import {Image, Section} from '../../../shared/pattern';
 import {jsx} from '@emotion/core';
 import {Text} from '../../../shared/pattern';
 import UserContext from '../user-context';
-function Profile({user}) {
-  console.log(user);
+
+function Profile() {
+  let data = useContext(UserContext);
+  console.log(data);
   return (
-    <Section>
-      <Text>{user.name}</Text>
-      <Text>{user.login}</Text>
-    </Section>
+    <div>
+      <Section>
+        <Image src={data.avatarUrl} alt="User avatar" responsive rounded />
+        <Text size="heading">{data.name}</Text>
+        <Text css={{fontSize: 20, fontWeight: 300}} tint="faded" size="heading">
+          {data.login}
+        </Text>
+      </Section>
+
+      <ProfileStatsSection
+        followers={data.followersCount}
+        following={data.followingCount}
+        reposCount={data.reposCount}
+      />
+      {data.organizations.length ? (
+        <OrganizationsSection orgs={data.organizations} />
+      ) : null}
+    </div>
   );
 }
 
@@ -25,8 +41,24 @@ function ProfileStatsSection({followers, following, reposCount}) {
   );
 }
 
-function OrganizationsSection({src}) {
-  return <Image src={src} css={{height: 40, width: 40}} />;
+function OrganizationsSection({orgs}) {
+  return (
+    <Section>
+      <Text size="superstandard">Organizations</Text>
+      {orgs.map((org) => {
+        return (
+          <a key={org.id} href={org.url} data-tooltip={org.login}>
+            <Image
+              src={org.avatarUrl}
+              responsive
+              rounded
+              css={{margin: 5, height: 42, width: 42, borderRadius: 3}}
+            />
+          </a>
+        );
+      })}
+    </Section>
+  );
 }
 
 function ProfileStat({stat, label}) {
@@ -47,8 +79,4 @@ function ProfileStat({stat, label}) {
   );
 }
 
-function ProfileUserConsumer() {
-  return <UserContext.Consumer>{(user) => <Profile user={user} />}</UserContext.Consumer>;
-}
-
-export default ProfileUserConsumer;
+export default Profile;

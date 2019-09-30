@@ -40,7 +40,10 @@ function applyStyles(styles, props) {
 }
 //#endregion
 
-export const Section = styled.div({padding: '20px 0'}, ({theme}) => theme.common.borderBottom);
+export const Section = styled.div(
+  {padding: '20px 0'},
+  ({theme}) => theme.common.borderBottom,
+);
 
 const heading = {
   display: 'block',
@@ -141,6 +144,7 @@ export function IsolatedContainer({children, ...props}) {
         justifyContent: 'center',
       }}
       {...props}
+      className="isolated-container"
     >
       {children}
     </div>
