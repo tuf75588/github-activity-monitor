@@ -7,7 +7,7 @@ import {IsolatedContainer, Text, LoadingMessagePage, PrimaryButton} from '../../
 import {Column, Row, Container} from '../../shared/layout';
 import Profile from './components/profile';
 import {jsx} from '@emotion/core';
-import {Box} from '@chakra-ui/core';
+
 const gql = String.raw;
 
 const userQuery = gql`
@@ -24,13 +24,32 @@ const userQuery = gql`
       following {
         totalCount
       }
-      issues(first: 100) {
+      repositories(
+        first: 100
+        privacy: PUBLIC
+        isFork: false
+        ownerAffiliations: [COLLABORATOR, OWNER]
+        orderBy: {field: PUSHED_AT, direction: DESC}
+      ) {
         totalCount
         edges {
           node {
             id
-            bodyText
-            title
+            name
+            description
+            url
+            pushedAt
+            stargazers {
+              totalCount
+            }
+            forkCount
+            languages(first: 1) {
+              edges {
+                node {
+                  name
+                }
+              }
+            }
           }
         }
       }
@@ -40,6 +59,7 @@ const userQuery = gql`
             id
             name
             avatarUrl
+            login
           }
         }
       }
@@ -48,7 +68,7 @@ const userQuery = gql`
 `;
 
 function makeDataMoreNormal(data) {
-  console.log(data);
+  // console.log(data);
   const {
     user: {
       login,
@@ -56,18 +76,27 @@ function makeDataMoreNormal(data) {
       avatarUrl,
       followers: {totalCount: followersCount},
       following: {totalCount: followingCount},
-      issues: {edges},
       organizations: {edges: orgs},
+      repositories: {edges: reposData, totalCount: reposCount},
     },
   } = data;
+  const repositories = reposData.map((r) => {
+    return {
+      ...r.node,
+      languages: undefined,
+      language: r.node.languages.edges[0] ? r.node.languages.edges[0].node.name : 'Unknown',
+      stargazersCount: r.node.stargazers.totalCount,
+    };
+  });
   return {
     login,
     name,
     avatarUrl,
-    issues: edges.map((issue) => issue.node),
     organizations: orgs.map(({node}) => node),
     followersCount,
     followingCount,
+    repositories,
+    reposCount,
   };
 }
 
@@ -90,23 +119,21 @@ function User({username}) {
     <LoadingMessagePage>Loading data for {username}</LoadingMessagePage>
   ) : data ? (
     <UserContext.Provider value={data}>
-      <Box display="flex">
-        <Box maxW="sm" pl="15px">
-          <Profile data={data} />
-          <PrimaryButton css={{marginTop: 20, width: '100%'}} to="/">
-            Logout
-          </PrimaryButton>
-        </Box>
-        <Box>
-          <Box pt="20px" pb="20px" w="lg" d="flex" justifyContent="center">
-            <input
-              type="text"
-              placeholder="filter issues"
-              css={{padding: 20, borderRadius: '5px', width: 300, height: 25, border: '0.5px solid black'}}
-            />
-          </Box>
-        </Box>
-      </Box>
+      <Container>
+        <Row>
+          <Column width="3">
+            <Profile />
+            <PrimaryButton onClick={logout} css={{width: '100%', marginTop: 20}}>
+              Logout
+            </PrimaryButton>
+          </Column>
+          <Column width="9">
+            <div>
+              <h1>Hello</h1>
+            </div>
+          </Column>
+        </Row>
+      </Container>
     </UserContext.Provider>
   ) : (
     <IsolatedContainer>

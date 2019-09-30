@@ -1,37 +1,66 @@
 /* @jsx jsx */
 
-import React from 'react';
+import React, {useContext} from 'react';
 import {Image, Section} from '../../../shared/pattern';
 import {jsx} from '@emotion/core';
-import {Box, Text} from '@chakra-ui/core';
-function Profile({data}) {
+import {Text} from '../../../shared/pattern';
+import UserContext from '../user-context';
+function Profile() {
+  const data = useContext(UserContext);
   const {organizations} = data;
+  const {followersCount, followingCount, reposCount} = data;
+
   console.log(data);
   return (
     <div>
       <Section>
         <Image src={data.avatarUrl} responsive rounded css={{width: 'auto'}} />
+        <Text size="heading">{data.name}</Text>
+        <Text size="standard" tint="faded" css={{fontSize: 20, fontWeight: 300}}>
+          {data.login}
+        </Text>
       </Section>
-      <Text fontSize="2xl" fontWeight="bold" textAlign="center" css={{marginBottom: 10}}>
-        Organizations
-      </Text>
-      <Box d="flex" justifyContent="space-around" flexWrap="wrap">
-        {organizations &&
-          organizations.map((orgs) => <OrganizationSection src={orgs.avatarUrl} key={orgs.id} name={orgs.name} />)}
-      </Box>
+      <Section>
+        <ProfileStatsSection followers={followersCount} following={followingCount} reposCount={reposCount} />
+      </Section>
     </div>
   );
 }
 
 function OrganizationSection({src, key, name}) {
   return (
-    <div key={key}>
+    <div>
       <Image src={src} responsive alt={`profile login for ${name}`} css={{width: 40, height: 40}} />
     </div>
   );
 }
 
-function ProfileState() {
-  return <div>this is where followers and stuff will go.</div>;
+function ProfileStatsSection({followers, following, reposCount}) {
+  return (
+    <Section css={{textAlign: 'center'}}>
+      <ProfileStat stat={followers} label="followers" />
+      <ProfileStat stat={following} label="following" />
+      <ProfileStat stat={reposCount} label="repositories" />
+    </Section>
+  );
 }
+
+function ProfileStat({stat, label}) {
+  return (
+    <div
+      css={{
+        display: 'inline-block',
+        width: 80,
+      }}
+    >
+      <Text size="heading" css={{margin: 0}}>
+        {stat}
+      </Text>
+      <Text tint="fadedExtra">
+        <small>{label}</small>
+      </Text>
+    </div>
+  );
+}
+
 export default Profile;

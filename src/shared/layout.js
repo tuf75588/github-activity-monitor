@@ -2,14 +2,14 @@ import styled from '@emotion/styled/macro';
 
 const sizes = {
   phone: 768,
-  tablet: 962,
+  tablet: 992,
   desktop: 1200,
 };
 const queries = {
   tiny: `@media(max-width: ${sizes.phone}px)`,
-  phone: `@media(max-width: ${sizes.phone}px)`,
-  tablet: `@media(max-width: ${sizes.tablet}px)`,
-  desktop: `@media(max-width: ${sizes.desktop}px)`,
+  phone: `@media(min-width: ${sizes.phone}px)`,
+  tablet: `@media(min-width: ${sizes.tablet}px)`,
+  desktop: `@media(min-width: ${sizes.desktop}px)`,
 };
 
 const Container = styled.div({
@@ -46,11 +46,10 @@ const Column = styled.div(
     minHeight: '1px',
     paddingRight: '15px',
     paddingLeft: '15px',
-    border: '1px solid black',
   },
   ({width}) => ({
     [queries.phone]: {
-      flex: 'width',
+      flex: width,
     },
   }),
 );

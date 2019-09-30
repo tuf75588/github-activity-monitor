@@ -59,6 +59,16 @@ const smallerHeading = {
   marginBottom: '10px;',
 };
 
+export const Input = styled.input({
+  label: 'input',
+  display: 'block',
+  height: '34px',
+  padding: '6px 12px',
+  lineHeight: '1.42857143',
+  borderRadius: '4px',
+  border: '1px solid #ccc',
+});
+
 export const Button = styled.button({
   display: 'inline-block',
   padding: '6px 12px',
@@ -108,8 +118,8 @@ export const Image = styled.img(
 export const Text = styled.span(
   variantStyles({
     tint: {
-      faded: ({theme}) => ({color: theme.fontColor.faded}),
-      fadedExtra: ({theme}) => ({color: theme.fontColor.fadedExtra}),
+      faded: ({theme}) => ({color: theme.colors.faded}),
+      fadedExtra: ({theme}) => ({color: theme.colors.fadedExtra}),
     },
     size: {
       superheading: [heading, largerHeading, {fontSize: 36}],
