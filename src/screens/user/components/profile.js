@@ -5,33 +5,13 @@ import {Image, Section} from '../../../shared/pattern';
 import {jsx} from '@emotion/core';
 import {Text} from '../../../shared/pattern';
 import UserContext from '../user-context';
-function Profile() {
-  const data = useContext(UserContext);
-  const {organizations} = data;
-  const {followersCount, followingCount, reposCount} = data;
-
-  console.log(data);
+function Profile({user}) {
+  console.log(user);
   return (
-    <div>
-      <Section>
-        <Image src={data.avatarUrl} responsive rounded css={{width: 'auto'}} />
-        <Text size="heading">{data.name}</Text>
-        <Text size="standard" tint="faded" css={{fontSize: 20, fontWeight: 300}}>
-          {data.login}
-        </Text>
-      </Section>
-      <Section>
-        <ProfileStatsSection followers={followersCount} following={followingCount} reposCount={reposCount} />
-      </Section>
-    </div>
-  );
-}
-
-function OrganizationSection({src, key, name}) {
-  return (
-    <div>
-      <Image src={src} responsive alt={`profile login for ${name}`} css={{width: 40, height: 40}} />
-    </div>
+    <Section>
+      <Text>{user.name}</Text>
+      <Text>{user.login}</Text>
+    </Section>
   );
 }
 
@@ -43,6 +23,10 @@ function ProfileStatsSection({followers, following, reposCount}) {
       <ProfileStat stat={reposCount} label="repositories" />
     </Section>
   );
+}
+
+function OrganizationsSection({src}) {
+  return <Image src={src} css={{height: 40, width: 40}} />;
 }
 
 function ProfileStat({stat, label}) {
@@ -63,4 +47,8 @@ function ProfileStat({stat, label}) {
   );
 }
 
-export default Profile;
+function ProfileUserConsumer() {
+  return <UserContext.Consumer>{(user) => <Profile user={user} />}</UserContext.Consumer>;
+}
+
+export default ProfileUserConsumer;
