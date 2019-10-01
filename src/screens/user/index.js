@@ -13,6 +13,7 @@ import {Column, Row, Container} from '../../shared/layout';
 import Profile from './components/profile';
 import {jsx} from '@emotion/core';
 import RepoFilter from './components/repo-filter';
+import RepoList from './components/repo-list';
 
 const gql = String.raw;
 
@@ -117,7 +118,6 @@ function User({username}) {
     variables: {username},
     normalize: makeDataMoreNormal,
   });
-  console.log(filter);
 
   return error ? (
     <IsolatedContainer>
@@ -142,6 +142,7 @@ function User({username}) {
           <Column width="9">
             <Text size="subheading">Repositories</Text>
             <RepoFilter onUpdate={setFilter} filter={filter} />
+            <RepoList filter={filter} />
           </Column>
         </Row>
       </Container>

@@ -3,7 +3,6 @@ import React from 'react';
 import {jsx} from '@emotion/core';
 import {Link} from '@reach/router';
 import styled from '@emotion/styled';
-import {style} from 'styled-system';
 import Loading from './loading';
 //! util functions
 //#region
