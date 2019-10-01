@@ -70,6 +70,10 @@ export const Input = styled.input({
   lineHeight: '1.42857143',
   borderRadius: '4px',
   border: '1px solid #ccc',
+  color: '#555',
+  backgroundColor: '#fff',
+  backgroundImage: 'none',
+  width: '100%',
 });
 
 export const Button = styled.button({

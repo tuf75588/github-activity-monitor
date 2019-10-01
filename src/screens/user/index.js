@@ -3,10 +3,16 @@ import React, {useState, useContext} from 'react';
 import {useQuery} from './components/query';
 import {Context as GithubContext} from '../../github-client';
 import UserContext from './user-context';
-import {IsolatedContainer, Text, LoadingMessagePage, PrimaryButton} from '../../shared/pattern';
+import {
+  IsolatedContainer,
+  Text,
+  LoadingMessagePage,
+  PrimaryButton,
+} from '../../shared/pattern';
 import {Column, Row, Container} from '../../shared/layout';
 import Profile from './components/profile';
 import {jsx} from '@emotion/core';
+import RepoFilter from './components/repo-filter';
 
 const gql = String.raw;
 
@@ -84,7 +90,9 @@ function makeDataMoreNormal(data) {
     return {
       ...r.node,
       languages: undefined,
-      language: r.node.languages.edges[0] ? r.node.languages.edges[0].node.name : 'Unknown',
+      language: r.node.languages.edges[0]
+        ? r.node.languages.edges[0].node.name
+        : 'Unknown',
       stargazersCount: r.node.stargazers.totalCount,
     };
   });
@@ -102,13 +110,14 @@ function makeDataMoreNormal(data) {
 
 //! user will receive a username prop for our graphql query
 function User({username}) {
-  const [filter, setfilter] = useState('');
+  const [filter, setFilter] = useState('');
   const {logout} = useContext(GithubContext);
   const {fetching, data, error} = useQuery({
     query: userQuery,
     variables: {username},
     normalize: makeDataMoreNormal,
   });
+  console.log(filter);
 
   return error ? (
     <IsolatedContainer>
@@ -123,14 +132,16 @@ function User({username}) {
         <Row>
           <Column width="3">
             <Profile />
-            <PrimaryButton onClick={logout} css={{width: '100%', marginTop: 20}}>
+            <PrimaryButton
+              onClick={logout}
+              css={{width: '100%', marginTop: 20}}
+            >
               Logout
             </PrimaryButton>
           </Column>
           <Column width="9">
-            <div>
-              <h1>Hello</h1>
-            </div>
+            <Text size="subheading">Repositories</Text>
+            <RepoFilter onUpdate={setFilter} filter={filter} />
           </Column>
         </Row>
       </Container>
