@@ -1,6 +1,7 @@
 import React from 'react';
 import {Input, Section} from '../../../shared/pattern';
 import PropTypes from 'prop-types';
+
 function RepoFilter({onUpdate, filter}) {
   return (
     //! this is where our input element will go to filter repositories

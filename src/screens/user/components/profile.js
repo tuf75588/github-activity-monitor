@@ -8,7 +8,6 @@ import UserContext from '../user-context';
 
 function Profile() {
   let data = useContext(UserContext);
-  console.log(data);
   return (
     <div>
       <Section>
@@ -24,9 +23,7 @@ function Profile() {
         following={data.followingCount}
         reposCount={data.reposCount}
       />
-      {data.organizations.length ? (
-        <OrganizationsSection orgs={data.organizations} />
-      ) : null}
+      {data.organizations.length ? <OrganizationsSection orgs={data.organizations} /> : null}
     </div>
   );
 }
@@ -48,12 +45,7 @@ function OrganizationsSection({orgs}) {
       {orgs.map((org) => {
         return (
           <a key={org.id} href={org.url} data-tooltip={org.login}>
-            <Image
-              src={org.avatarUrl}
-              responsive
-              rounded
-              css={{margin: 5, height: 42, width: 42, borderRadius: 3}}
-            />
+            <Image src={org.avatarUrl} responsive rounded css={{margin: 5, height: 42, width: 42, borderRadius: 3}} />
           </a>
         );
       })}
