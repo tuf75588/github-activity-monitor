@@ -39,10 +39,7 @@ function applyStyles(styles, props) {
 }
 //#endregion
 
-export const Section = styled.div(
-  {padding: '20px 0'},
-  ({theme}) => theme.common.borderBottom,
-);
+export const Section = styled.div({padding: '20px 0'}, ({theme}) => theme.common.borderBottom);
 
 export const Anchor = styled.a({
   textDecoration: 'none',

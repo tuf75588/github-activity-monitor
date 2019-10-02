@@ -27,10 +27,7 @@ function RepoList({filter}) {
   );
 }
 
-const ListItem = styled.li(
-  {padding: '20px 0'},
-  ({theme}) => theme.common.borderBottom,
-);
+const ListItem = styled.li({padding: '20px 0'}, ({theme}) => theme.common.borderBottom);
 
 function RepoListItem({repo}) {
   const timeUpdated = distanceInWordsToNow(repo.pushedAt);
