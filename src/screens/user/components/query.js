@@ -56,19 +56,25 @@ function useQuery({normalize = (data) => data, query, variables}) {
   const client = useContext(Github.Context);
   useDeepCompareEffect(() => {
     setState({fetching: true});
-    client.request(query, variables).then((res) => {
-      setState({
-        data: normalize(res),
-        loaded: true,
-        fetching: false,
-        error: null,
+    client
+      .request(query, variables)
+      .then((res) => {
+        setState({
+          data: normalize(res),
+          loaded: true,
+          fetching: false,
+          error: null,
+        });
+      })
+      .catch(({response}) => {
+        setState({error: response.errors[0].message});
       });
-    });
   }, [query, variables]);
 
   return state;
 }
 
+//! for testing purposes
 const Query = ({children, ...props}) => children(useQuery(props));
 
 Query.propTypes = {

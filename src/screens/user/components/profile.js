@@ -13,7 +13,11 @@ function Profile() {
       <Section>
         <Image src={data.avatarUrl} alt="User avatar" responsive rounded />
         <Text size="heading">{data.name}</Text>
-        <Text css={{fontSize: 20, fontWeight: 300}} tint="faded" size="heading">
+        <Text
+          tint="faded"
+          size="standard"
+          css={{fontWeight: 20, fontSize: '20px'}}
+        >
           {data.login}
         </Text>
       </Section>
@@ -23,7 +27,9 @@ function Profile() {
         following={data.followingCount}
         reposCount={data.reposCount}
       />
-      {data.organizations.length ? <OrganizationsSection orgs={data.organizations} /> : null}
+      {data.organizations.length ? (
+        <OrganizationsSection orgs={data.organizations} />
+      ) : null}
     </div>
   );
 }
@@ -45,7 +51,12 @@ function OrganizationsSection({orgs}) {
       {orgs.map((org) => {
         return (
           <a key={org.id} href={org.url} data-tooltip={org.login}>
-            <Image src={org.avatarUrl} responsive rounded css={{margin: 5, height: 42, width: 42, borderRadius: 3}} />
+            <Image
+              src={org.avatarUrl}
+              responsive
+              rounded
+              css={{margin: 5, height: 42, width: 42, borderRadius: 3}}
+            />
           </a>
         );
       })}

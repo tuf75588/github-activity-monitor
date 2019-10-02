@@ -39,7 +39,24 @@ function applyStyles(styles, props) {
 }
 //#endregion
 
-export const Section = styled.div({padding: '20px 0'}, ({theme}) => theme.common.borderBottom);
+export const Section = styled.div(
+  {padding: '20px 0'},
+  ({theme}) => theme.common.borderBottom,
+);
+
+export const Anchor = styled.a({
+  textDecoration: 'none',
+  color: '#337ab7',
+  '&:active,&:hover': {outline: 0},
+  '&:hover,&:focus': {
+    color: '#23527c',
+    textDecoration: 'underline',
+  },
+  ':focus': {
+    outline: '5px auto -webkit-focus-ring-color',
+    outlineOffset: '-2px',
+  },
+});
 
 const heading = {
   display: 'block',

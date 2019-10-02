@@ -3,7 +3,13 @@ import React, {useState, useContext} from 'react';
 import {useQuery} from './components/query';
 import {Context as GithubContext} from '../../github-client';
 import UserContext from './user-context';
-import {IsolatedContainer, Text, LoadingMessagePage, PrimaryButton, Button} from '../../shared/pattern';
+import {
+  IsolatedContainer,
+  Text,
+  LoadingMessagePage,
+  PrimaryButton,
+  Button,
+} from '../../shared/pattern';
 import {Column, Row, Container} from '../../shared/layout';
 import Profile from './components/profile';
 import {jsx} from '@emotion/core';
@@ -86,7 +92,9 @@ function makeDataMoreNormal(data) {
     return {
       ...r.node,
       languages: undefined,
-      language: r.node.languages.edges[0] ? r.node.languages.edges[0].node.name : 'Unknown',
+      language: r.node.languages.edges[0]
+        ? r.node.languages.edges[0].node.name
+        : 'Unknown',
       stargazersCount: r.node.stargazers.totalCount,
     };
   });
@@ -114,7 +122,6 @@ function User({username}) {
 
   return error ? (
     <IsolatedContainer>
-      <Text size="subheading">Oh no! there was an error!</Text>
       <p>{JSON.stringify(error, null, 2)}</p>
     </IsolatedContainer>
   ) : fetching ? (
@@ -125,10 +132,16 @@ function User({username}) {
         <Row>
           <Column width="3">
             <Profile />
-            <PrimaryButton onClick={logout} css={{width: '100%', marginTop: 20}}>
+            <PrimaryButton
+              onClick={logout}
+              css={{width: '100%', marginTop: 20}}
+            >
               Logout
             </PrimaryButton>
-            <Button css={{marginTop: 5, width: '100%'}} onClick={() => navigate('/')}>
+            <Button
+              css={{marginTop: 5, width: '100%'}}
+              onClick={() => navigate('/')}
+            >
               Try another
             </Button>
           </Column>
