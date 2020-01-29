@@ -20,4 +20,4 @@ The inspiration for this application came from GitHub having recently introduced
 - [x] Establish Authentication via react-netlify-identity
 
 
-You can view a live deployment of this application here [here](https://react-github1.netlify.com/)
+You can view a live deployment of this application [here](https://react-github1.netlify.com/)
